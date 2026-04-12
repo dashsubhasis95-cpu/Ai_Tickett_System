@@ -49,4 +49,18 @@ export const login = async (req, res) => {
 };
 
 
+export const logout = async (req, res) => {
+  try {
+    const token = req.headers.authorization.split(" ")[1];
+    if (!token) return res.status(401).json({ error: "Unauthorzed" });
+    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+      if (err) return res.status(401).json({ error: "Unauthorized" });
+    });
+    res.json({ message: "Logout successfully" });
+  } catch (error) {
+    res.status(500).json({ error: "Login failed", details: error.message });
+  }
+};
+
+
 
