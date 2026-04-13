@@ -33,3 +33,24 @@ export const createTicket = async (req, res) => {
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
+
+export const getTickets = async (req, res) => {
+  try {
+    const user = req.user;
+    let tickets = [];
+    if (user.role !== "user") {
+      tickets = Ticket.find({})
+        .populate("assignedTo", ["email", "_id"])
+        .sort({ createdAt: -1 });
+    } else {
+      tickets = await Ticket.find({ createdBy: user._id })
+        .select("title description status createdAt")
+        .sort({ createdAt: -1 });
+    }
+    return res.status(200).json(tickets);
+  } catch (error) {
+    console.error("Error fetching tickets", error.message);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
