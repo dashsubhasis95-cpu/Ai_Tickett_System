@@ -8,8 +8,13 @@ export const  onTicketCreated = inngest.createFunction(
             const {ticketId} = event.data;
             const ticket = await step.run("fetch-ticket", async () => {
                 const ticketObject = await Ticket.findById(ticketId);
+                if (!ticketObject) {
+                    throw new NonRetriableError("Ticket not found");
+                }
 
-                
+                return ticketObject;
+
+
 
 
             })
