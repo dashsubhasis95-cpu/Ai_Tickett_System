@@ -20,7 +20,15 @@ export const  onTicketCreated = inngest.createFunction(
             });
 
 
-            await 
+            await step.run("update-ticket-status", async () => {
+                await Ticket.findByIdAndUpdate(ticketId, {status: "TODO"});
+            });
+
+            const aiResponse = await analyzeTicket(ticket);
+
+            
+
+
         }
 
 
