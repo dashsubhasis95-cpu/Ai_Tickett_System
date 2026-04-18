@@ -25,6 +25,22 @@ export const  onTicketCreated = inngest.createFunction(
             });
 
             const aiResponse = await analyzeTicket(ticket);
+            
+      const relatedskills = await step.run("ai-processing", async () => {
+        let skills = [];
+        if (aiResponse) {
+          await Ticket.findByIdAndUpdate(ticket._id, {
+            priority: !["low", "medium", "high"].includes(aiResponse.priority)
+              ? "medium"
+              : aiResponse.priority,
+            helpfulNotes: aiResponse.helpfulNotes,
+            status: "IN_PROGRESS",
+            relatedSkills: aiResponse.relatedSkills,
+          });
+          skills = aiResponse.relatedSkills;
+        }
+        return skills;
+      });
 
             
 
