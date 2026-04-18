@@ -18,6 +18,9 @@ export const  onTicketCreated = inngest.createFunction(
 
 
             });
+
+
+            await 
         }
 
 
