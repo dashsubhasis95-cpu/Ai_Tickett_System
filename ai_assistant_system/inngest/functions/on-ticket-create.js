@@ -60,9 +60,29 @@ export const  onTicketCreated = inngest.createFunction(
                 await User.findOne({role: "moderator"});
               }
 
-              await Ticket.findByIdAndUpdate(ticketId, {assignedTo: user?._id || null});
+              await Ticket.findByIdAndUpdate(ticket._id, {assignedTo: user?._id || null});
 
               return user;
+
+            });
+
+            await step.run("send-email-notifications", async () => {
+              if(moderator){
+                const finalticket = await Ticket.findById(ticketId);
+                await sendEmail(
+                  moderator.email,
+                  "Ticket Assigned",
+                  `A new ticket is assigned to you ${finalTicket.title}`
+
+
+                );
+              }
+            });
+
+            return {success: true};
+
+
+
 
         
 
@@ -73,8 +93,13 @@ export const  onTicketCreated = inngest.createFunction(
             
 
 
+        } catch (err) {
+            console.error("Error processing ticket creation:", err.message);
+            return { success: false};
         }
 
+    }  
 
-}
-)
+
+  
+);
