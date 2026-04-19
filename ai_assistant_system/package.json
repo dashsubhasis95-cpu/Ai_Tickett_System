@@ -1,21 +1,13 @@
 {
-  "name": "ai_ticket_system",
-  "version": "1.0.0",
-  "description": "a ai ticket system",
-  "keywords": [
-    "backend",
-    "javascript",
-    "node",
-    "js"
-  ],
-  "license": "ISC",
-  "author": "subhasis dash",
-  "type": "commonjs",
-  "main": "index.js",
-  "scripts": {
-    "dev": "nodemon index.js"
-  },
-  "devDependencies": {
-    "nodemon": "^3.1.14"
+  "dependencies": {
+    "@inngest/agent-kit": "^0.13.2",
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "inngest": "^4.2.4",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.4.1",
+    "nodemailer": "^8.0.5"
   }
 }
