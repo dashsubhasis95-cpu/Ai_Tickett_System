@@ -43,7 +43,29 @@ export const  onTicketCreated = inngest.createFunction(
 
               return skills;
 
-            })
+            });
+
+            const moderator = await step.run("fetch-moderator", async () => {
+              const user = await User.findOne({role: "moderator", 
+                skills: {
+                  $elemMatch: {
+                    $regrex: relatedSkills.join("|"),
+                    $options: "i"
+                  },
+                },
+
+              });
+
+              if(!user){
+                await User.findOne({role: "moderator"});
+              }
+
+              await Ticket.findByIdAndUpdate(ticketId, {assignedTo: user?._id || null});
+
+              return user;
+
+        
+
 
 
             
