@@ -1,4 +1,12 @@
 {
+  "name": "ai-ticket-system",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
   "dependencies": {
     "@inngest/agent-kit": "^0.13.2",
     "bcrypt": "^6.0.0",
@@ -9,5 +17,8 @@
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.4.1",
     "nodemailer": "^8.0.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
   }
 }
